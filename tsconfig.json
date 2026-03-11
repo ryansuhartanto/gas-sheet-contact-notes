@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "verbatimModuleSyntax": true,
+
+    "types": ["*"],
+    "skipLibCheck": true,
+
+    "outDir": "dist"
+  }
+}

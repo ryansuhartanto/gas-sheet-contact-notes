@@ -1,0 +1,38 @@
+{
+  "name": "gas-sheet-people",
+  "private": true,
+  "description": "Spreadsheet people database for Google Apps Script",
+  "author": {
+    "name": "Ryan Suhartanto",
+    "email": "suhartanto@kekkon.nexus"
+  },
+  "type": "module",
+  "exports": {
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "scripts": {
+    "prepare": "husky",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "build": "tsc --build"
+  },
+  "devDependencies": {
+    "@google/clasp": "^3.2.0",
+    "@types/bun": "latest",
+    "@types/google-apps-script": "^2.0.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.3",
+    "oxfmt": "^0.38.0",
+    "oxlint": "^1.53.0",
+    "typescript": "^6.0.1-rc",
+    "ultracite": "7.2.5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
+      "bun run fix"
+    ]
+  }
+}
