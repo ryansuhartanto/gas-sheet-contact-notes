@@ -11,7 +11,7 @@
     "prepare": "husky",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "build": "tsc --build && oxfmt ./dist --write"
+    "build": "tsc --build && oxfmt ./dist --write && cp appsscript.json ./dist/src"
   },
   "devDependencies": {
     "@google/clasp": "^3.2.0",

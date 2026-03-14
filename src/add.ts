@@ -26,7 +26,6 @@ function addContactNotes(
     numRows -= 1;
   }
 
-  // Add this guard
   if (numRows <= 0) {
     console.log("No rows to process after accounting for header. Skipping.", {
       numRows,
