@@ -22,7 +22,15 @@ function handleOnEdit(
       throw new Error(`Sheet with name "${databaseSheetName}" not found.`);
     }
 
-    const contacts = parseContactSheet(activeSheet, e.range);
+    const row = e.range.getRow();
+    const numRows = e.range.getNumRows();
+
+    const column = 1;
+    const numColumns = 3;
+
+    const range = activeSheet.getRange(row, column, numRows, numColumns);
+
+    const contacts = parseContactSheet(activeSheet, range);
 
     updateContactNotes(databaseSheet, contacts, columnToWatch);
   }
