@@ -1,23 +1,17 @@
 {
-  "name": "gas-sheet-people",
+  "name": "gas-sheet-contact",
   "private": true,
-  "description": "Spreadsheet people database for Google Apps Script",
+  "description": "Spreadsheet contact database in Google Apps Script",
   "author": {
     "name": "Ryan Suhartanto",
     "email": "suhartanto@kekkon.nexus"
   },
-  "type": "module",
-  "exports": {
-    "./*": {
-      "import": "./dist/*.js",
-      "types": "./dist/*.d.ts"
-    }
-  },
+  "type": "commonjs",
   "scripts": {
     "prepare": "husky",
     "check": "ultracite check",
     "fix": "ultracite fix",
-    "build": "tsc --build"
+    "build": "tsc --build && oxfmt ./dist --write"
   },
   "devDependencies": {
     "@google/clasp": "^3.2.0",
