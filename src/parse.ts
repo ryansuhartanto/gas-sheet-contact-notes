@@ -9,15 +9,19 @@ function splitContact(cellValue: string): string[] {
 
 function parseContactSheet(
   contactSheet: GoogleAppsScript.Spreadsheet.Sheet,
-  range?: GoogleAppsScript.Spreadsheet.Range,
+  range: GoogleAppsScript.Spreadsheet.Range = contactSheet.getDataRange(),
 ): Contact[] {
-  const values = (range ?? contactSheet.getDataRange())
-    .getValues()
-    .slice(CONTACT_SHEET_INCLUDE_HEADER === "true" ? 1 : 0) as [
+  const startRow = range.getRow();
+
+  let values = range.getValues() as [
     ToStringable,
     ToStringable,
     ToStringable,
   ][];
+
+  if (CONTACT_SHEET_INCLUDE_HEADER === "true" && startRow === 1) {
+    values = values.slice(1);
+  }
 
   return values.map(([name, emails, phones]) => ({
     emails: splitContact(emails.toString()),

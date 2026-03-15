@@ -2,6 +2,7 @@ function updateContactNotes(
   sheet: GoogleAppsScript.Spreadsheet.Sheet,
   contacts: Contact[],
   column: number,
+  range?: GoogleAppsScript.Spreadsheet.Range,
 ) {
   const includeHeader = CONTACT_SHEET_INCLUDE_HEADER === "true";
 
@@ -16,6 +17,27 @@ function updateContactNotes(
     return;
   }
 
+  let editedContacts = contacts;
+
+  if (range) {
+    let rangeRow = range.getRow();
+    let rangeNumRows = range.getNumRows();
+
+    if (includeHeader && rangeRow === 1) {
+      rangeRow += 1;
+      rangeNumRows -= 1;
+    }
+
+    editedContacts = contacts.slice(rangeRow - 1, rangeRow - 1 + rangeNumRows);
+  }
+
+  if (editedContacts.length === 0) {
+    console.log("No edited contacts found. Notes will not be updated.", {
+      range,
+    });
+    return;
+  }
+
   const numRows = lastRow - row + 1;
   const numColumns = 1;
 
@@ -25,15 +47,15 @@ function updateContactNotes(
   let searchKeys: string[] = [];
   switch (CONTACT_KEY ?? "email") {
     case "name": {
-      searchKeys = contacts.map((c) => c.name);
+      searchKeys = editedContacts.map((c) => c.name);
       break;
     }
     case "email": {
-      searchKeys = contacts.flatMap((c) => c.emails);
+      searchKeys = editedContacts.flatMap((c) => c.emails);
       break;
     }
     case "phone": {
-      searchKeys = contacts.flatMap((c) => c.phones);
+      searchKeys = editedContacts.flatMap((c) => c.phones);
       break;
     }
     default: {

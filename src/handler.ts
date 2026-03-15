@@ -22,16 +22,8 @@ function handleOnEdit(
       throw new Error(`Sheet with name "${databaseSheetName}" not found.`);
     }
 
-    const row = e.range.getRow();
-    const numRows = e.range.getNumRows();
+    const contacts = parseContactSheet(activeSheet);
 
-    const column = 1;
-    const numColumns = 3;
-
-    const range = activeSheet.getRange(row, column, numRows, numColumns);
-
-    const contacts = parseContactSheet(activeSheet, range);
-
-    updateContactNotes(databaseSheet, contacts, columnToWatch);
+    updateContactNotes(databaseSheet, contacts, columnToWatch, e.range);
   }
 }
