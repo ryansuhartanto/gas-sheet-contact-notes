@@ -4,7 +4,7 @@ function updateContactNotes(
   column: number,
   range?: GoogleAppsScript.Spreadsheet.Range,
 ) {
-  const includeHeader = CONTACT_SHEET_INCLUDE_HEADER === "true";
+  const { includeHeader } = config;
 
   const row = 1 + (includeHeader ? 1 : 0);
   const lastRow = sheet.getLastRow();
@@ -49,7 +49,7 @@ function updateContactNotes(
   const processRows = new Set<number>();
 
   let searchKeys: string[] = [];
-  switch (CONTACT_KEY ?? "email") {
+  switch (config.key) {
     case "name": {
       searchKeys = editedContacts.map((c) => c.name);
       break;
@@ -63,7 +63,7 @@ function updateContactNotes(
       break;
     }
     default: {
-      throw new Error(`Unhandled contact key: ${CONTACT_KEY}`);
+      throw new Error(`Unhandled contact key: ${config.key}`);
     }
   }
 

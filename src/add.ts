@@ -20,7 +20,7 @@ function addContactNotes(
   let numRows = range.getNumRows();
   const numColumns = 1;
 
-  const includeHeader = CONTACT_SHEET_INCLUDE_HEADER === "true";
+  const { includeHeader } = config;
   if (includeHeader && row === 1) {
     row += 1;
     numRows -= 1;

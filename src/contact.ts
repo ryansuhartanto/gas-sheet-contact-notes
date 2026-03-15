@@ -31,7 +31,7 @@ function generateContactNote(...contacts: Contact[]): string {
 function generateContactMap(contacts: Contact[]): Map<string, Contact> {
   const contactMap = new Map<string, Contact>();
 
-  switch (CONTACT_KEY ?? "email") {
+  switch (config.key) {
     case "name": {
       for (const contact of contacts) {
         if (!contact.name) {
@@ -61,7 +61,7 @@ function generateContactMap(contacts: Contact[]): Map<string, Contact> {
       break;
     }
     default: {
-      throw new Error(`Unhandled contact key: ${CONTACT_KEY}`);
+      throw new Error(`Unhandled contact key: ${config.key}`);
     }
   }
 

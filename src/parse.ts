@@ -3,7 +3,7 @@ interface ToStringable {
 }
 
 function splitContactKeys(cellValue: string): string[] {
-  const separator = CONTACT_SHEET_SEPARATOR ?? "\n";
+  const { separator } = config;
   return cellValue
     .split(separator)
     .map((part) => part.trim())
@@ -26,7 +26,7 @@ function parseContactSheet(
     numColumns,
   ) as [ToStringable | null, ToStringable | null, ToStringable | null][];
 
-  if (CONTACT_SHEET_INCLUDE_HEADER === "true" && row === 1) {
+  if (config.includeHeader && row === 1) {
     values = values.slice(1);
   }
 
