@@ -4,7 +4,10 @@ interface ToStringable {
 
 function splitContactKeys(cellValue: string): string[] {
   const separator = CONTACT_SHEET_SEPARATOR ?? "\n";
-  return cellValue.split(separator).map((part) => part.trim());
+  return cellValue
+    .split(separator)
+    .map((part) => part.trim())
+    .filter(Boolean);
 }
 
 function parseContactSheet(
