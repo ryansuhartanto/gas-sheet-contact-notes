@@ -111,7 +111,7 @@ function updateContactNotes(
         value,
       });
 
-      cell.setNote("");
+      cell.clearNote();
       continue;
     }
 

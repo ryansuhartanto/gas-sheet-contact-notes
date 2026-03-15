@@ -39,6 +39,8 @@ function addContactNotes(
 
   const contactMap = generateContactMap(contacts);
 
+  let hasNotes = false;
+
   // Values' column is only 1
   const notes: [string][] = processValues.map(([value]) => {
     const keys = splitContactKeys(value.toString());
@@ -63,9 +65,14 @@ function addContactNotes(
       return [""];
     }
 
+    hasNotes = true;
     return [generateContactNote(...matchedContacts)];
   });
 
-  processRange.setNotes(notes);
+  processRange.clearNote();
+  if (hasNotes) {
+    processRange.setNotes(notes);
+  }
+
   SpreadsheetApp.flush();
 }
