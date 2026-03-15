@@ -41,10 +41,10 @@ function addContactNotes(
 
   // Values' column is only 1
   const notes: [string][] = processValues.map(([value]) => {
-    const emails = splitContact(value.toString());
+    const keys = splitContactKeys(value.toString());
 
-    const matchedContacts = emails
-      .map((email) => contactMap.get(email))
+    const matchedContacts = keys
+      .map((key) => contactMap.get(key))
       .filter((contact) => contact !== undefined);
 
     if (matchedContacts.length === 0) {

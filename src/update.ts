@@ -20,15 +20,19 @@ function updateContactNotes(
   let editedContacts = contacts;
 
   if (range) {
-    let rangeRow = range.getRow();
-    let rangeNumRows = range.getNumRows();
+    let start = range.getRow() - 1;
+    let end = range.getNumRows();
 
-    if (includeHeader && rangeRow === 1) {
-      rangeRow += 1;
-      rangeNumRows -= 1;
+    if (includeHeader) {
+      if (start === 0) {
+        start += 1;
+        end -= 1;
+      }
+
+      start -= 1;
     }
 
-    editedContacts = contacts.slice(rangeRow - 1, rangeRow - 1 + rangeNumRows);
+    editedContacts = contacts.slice(start, start + end);
   }
 
   if (editedContacts.length === 0) {
@@ -64,6 +68,11 @@ function updateContactNotes(
   }
 
   for (const key of searchKeys) {
+    if (!key) {
+      console.log("Empty key found. Skipping.");
+      continue;
+    }
+
     const matches = processRange
       .createTextFinder(key)
       .matchEntireCell(false)
@@ -83,10 +92,10 @@ function updateContactNotes(
   for (const processRow of processRows) {
     const cell = sheet.getRange(processRow, column);
     const value = cell.getValue() as ToStringable;
-    const emails = splitContact(value.toString());
+    const keys = splitContactKeys(value.toString());
 
-    const matchedContacts = emails
-      .map((email) => contactMap.get(email))
+    const matchedContacts = keys
+      .map((key) => contactMap.get(key))
       .filter((contact) => contact !== undefined);
 
     if (matchedContacts.length === 0) {
