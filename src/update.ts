@@ -94,6 +94,14 @@ function updateContactNotes(
     const value = cell.getValue() as ToStringable;
     const keys = splitContactKeys(value.toString());
 
+    if (keys.length === 0) {
+      console.log("Empty cell. Note will be empty.", {
+        value,
+      });
+
+      return [""];
+    }
+
     const matchedContacts = keys
       .map((key) => contactMap.get(key))
       .filter((contact) => contact !== undefined);
@@ -108,5 +116,6 @@ function updateContactNotes(
     }
 
     cell.setNote(generateContactNote(...matchedContacts));
+    SpreadsheetApp.flush();
   }
 }

@@ -43,6 +43,14 @@ function addContactNotes(
   const notes: [string][] = processValues.map(([value]) => {
     const keys = splitContactKeys(value.toString());
 
+    if (keys.length === 0) {
+      console.log("Empty cell. Note will be empty.", {
+        value,
+      });
+
+      return [""];
+    }
+
     const matchedContacts = keys
       .map((key) => contactMap.get(key))
       .filter((contact) => contact !== undefined);
@@ -59,4 +67,5 @@ function addContactNotes(
   });
 
   processRange.setNotes(notes);
+  SpreadsheetApp.flush();
 }
